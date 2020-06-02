@@ -1,0 +1,44 @@
+Forums
+
+											[] = Category
+											X) = Topic/Section
+											'' = Description
+											{} = Icon
+
+[News and Announcements]
+
+	1) {}News
+		'Latest news for the community.'
+
+[Suggestions & Constructive Criticism]
+
+	1) {}Player vs. Player
+		'Give us your thoughts on our current PvP'
+	2) {}Player vs. Environment
+		'Give us your thoughts on our current PvE'
+	3) {}Website & Forums
+		'Give us your thoughts on our current Website and Forums'
+
+[Community]
+
+	1) {}General Discussion
+		'Discuss about Omnis. Non-support related.'
+	2) {}Introduce Yourself
+		'New to Omnis? Tell us about yourself!'
+	3) {}Community Creations
+		'Share your stories, art, videos and other creations'
+	4) {}Recruitment
+		'Let everyone know about your Guild, Arena team and other recruitments'
+	5) {}Off-Topic
+		'Talk jibberish..'
+
+[Support Center]
+
+	1) {}Support & Q/A
+		'A place for players and staff members to help players'
+	2) {}Report a Bug
+		'Report any bug you've encountered'
+	3) {}Report a Player
+		'Report hackers, exploiters and more'
+	4) {}Report a Staff Member
+		'Report an abusing Staff member'

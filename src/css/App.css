@@ -1,0 +1,115 @@
+/*   GENERIC BEGIN   */
+
+html {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(32, 32, 32);
+  color: rgb(255, 255, 255);
+  font-family: 'Cabin', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+}
+
+img {
+  max-width: 100%;
+  width: auto;
+  background-color: rgb(20, 20, 20);
+}
+
+a {
+  color: unset;
+  text-decoration: none;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2em 3em;
+}
+
+article {
+  padding: 2em;
+}
+
+section {
+  margin: 2em 0;
+}
+
+footer {
+  padding: 1em;
+  color: rgb(255, 255, 255);
+  background-color: rgb(20, 20, 20);
+}
+
+/*   GENERIC END  */
+
+/*   NAV BEGIN   */
+
+nav {
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(20, 20, 20);
+}
+
+#linkContainer {
+  display: flex;
+}
+
+#linkContainer>a {
+  padding: 0.6em;
+}
+
+/*   NAV END   */
+
+/*   FRONTPAGE BEGIN   */
+
+#frontpageBanner {
+  object-fit: contain;
+  max-height: 10em;
+  width: auto;
+}
+
+#frontpageLauncher {
+  max-width: 50%;
+}
+
+#frontpage>#blurb {
+  display: flex;
+  align-items: center;
+  max-width: 80%;
+  background-color: rgb(20, 20, 20);
+}
+#blurb>section>div {
+  margin: 1em;
+}
+
+/*   FRONTPAGE END   */
+
+/*   MOBILE BEGIN   */
+
+@media screen and (max-width: 800px) {
+  main {
+    padding: 2em;
+  }
+  
+  #frontpage>#blurb {
+    flex-direction: column;
+    max-width: 100%;
+  }
+  #frontpage>#blurb>div {
+    margin-right: unset;
+    margin-bottom: 2em;
+  }
+  #frontpageLauncher {
+    max-width: 100%;
+  }
+}
+
+/*   MOBILE END   */
