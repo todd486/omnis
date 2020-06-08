@@ -1,5 +1,5 @@
 #forumThreadContainer {
-    width: 80%;
+    width: 100%;
 }
 
 
@@ -35,7 +35,7 @@
 }
 
 #threadContainer {
-    width: 80%;
+    width: 100%;
 }
 
 .forumPost {
@@ -60,7 +60,7 @@
 .forumPostInfo {
     display: flex;
     flex-direction: column;
-    width: 5em;
+
     border-right: 1px solid rgb(50, 50, 50);
 }
 

@@ -2,43 +2,59 @@ import React from 'react';
 import { Switch, Route, Link, BrowserRouter, useParams, useRouteMatch } from 'react-router-dom';
 import './css/App.css';
 
-import Forum from './Forum';
+import Forum from './components/Forum';
 
 import Banner from './img/omnis-wallpaper.png';
 import Launcher from './img/OmnisWorld-Launcher.png';
 
 class Nav extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			loggedIn: true,
+			user: {
+				UUID: null,
+				name: "whii"
+			}
+		}
+	}
+	componentWillMount() {
+		//load data 'n stuff
+	}
 	render() {
 		return (
 			<nav>
 				<div id="logoContainer">
-					<img src="" alt="Omnis small logo"/>
+					<Link to="/"><img src="" alt="Omnis small logo" /></Link>
 				</div>
 				<div id="linkContainer">
-					<Link to="/"		>Home</Link>
 					<Link to="/forum"	>Forums</Link>
 					<Link to="/news"	>News</Link>
 					<Link to="/about"	>About us</Link>
+					{this.state.loggedIn ?
+						<span>
+							<Link to="/dashboard">
+								<i className="icon fas fa-user" />
+								<span>Welcome <i>{`${this.state.user.name}`}</i>!</span>
+							</Link>
+							<Link to="/" id="logout" className="noselect" onClick={() => {
+								this.setState({ loggedIn: false });
+							}}>Log Out</Link>
+						</span> :
+						<span>
+							<i className="icon far fa-user" />
+							<Link to="/register">Register</Link>
+							<Link to="/login">Log In</Link>
+						</span>
+					}
 				</div>
+
 			</nav>
 		);
 	}
 }
 
-class Footer extends React.Component {
-	render() {
-		return (
-			<footer>
-				<h3>Social Media</h3>
-				{/* Links to social media here */}
-				<ul id="socialMediaLinks">
-					<li>Lorem</li>
-					<li>Ipsum</li>
-				</ul>
-			</footer>
-		);
-	}
-}
+
 
 export default function App() {
 	return (
@@ -46,10 +62,13 @@ export default function App() {
 			<div className="App">
 				<Nav />
 				<Switch>
-					<Route exact path="/" 	component={Frontpage} />
-					<Route path="/forum" 	component={Forum} />
-					<Route path="/news" 	component={News} />
-					<Route path="/about" 	component={About} />
+					<Route exact path="/" component={Frontpage} />
+					<Route path="/forum" component={Forum} />
+					<Route path="/news" component={News} />
+					<Route path="/about" component={About} />
+					<Route path="/register" component={Register} />
+					<Route path="/login" component={Login} />
+					<Route path="/dashboard" component={Dashboard} />
 				</Switch>
 				<Footer />
 			</div>
@@ -86,7 +105,7 @@ function Frontpage() {
 			<section id="forums">
 				<h2>Recent forum posts</h2>
 				<div id="forumContainer">
-					
+
 				</div>
 			</section>
 		</main>
@@ -107,4 +126,98 @@ function News() {
 			<h1>News</h1>
 		</main>
 	);
+}
+
+class Dashboard extends React.Component {
+	render() {
+		return (
+			<main>
+				<h1>Your Dashboard</h1>
+			</main>
+		);
+	}
+}
+
+class Register extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			email: "",
+			password: "",
+			passwordRepeat: "",
+		};
+	}
+	render() {
+		return (
+			<main>
+				<h1>Register</h1>
+				<form>
+					<div className="inputContainer">
+						<label>Email</label>
+						<input type="email" />
+					</div>
+					<div className="inputContainer">
+						<label>Password</label>
+						<input type="password" />
+					</div>
+					<div className="inputContainer">
+						<label>Repeat Password</label>
+						<input type="password" />
+					</div>
+
+					<button type="submit" onClick={() => {
+						
+					}}>Log In</button>
+				</form>
+			</main>
+		);
+	}
+}
+
+class Login extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			email: "",
+			password: "",
+		};
+	}
+
+	render() {
+		return (
+			<main>
+				<h1>Login</h1>
+				<form>
+					<div className="inputContainer">
+						<label>Email</label>
+						<input type="email" />
+					</div>
+					<div className="inputContainer">
+						<label>Password</label>
+						<input type="password" />
+					</div>
+
+					<button type="submit" onClick={() => {
+						
+					}}>Log In</button>
+				</form>
+			</main>
+		);
+	}
+}
+
+class Footer extends React.Component {
+	render() {
+		return (
+			<footer>
+				<h3>Social Media</h3>
+				{/* Links to social media here */}
+				<ul id="socialMediaLinks">
+					<li>Lorem</li>
+					<li>Ipsum</li>
+				</ul>
+				<div>Website design by Isabelle Svahn 2020</div>
+			</footer>
+		);
+	}
 }

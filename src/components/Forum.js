@@ -1,6 +1,6 @@
 import React from 'react';
-import { Switch, Route, Link, useParams, useRouteMatch } from 'react-router-dom';
-import './css/Forum.css';
+import { Switch, Route, Link, useParams, useRouteMatch, useHistory } from 'react-router-dom';
+import '../css/Forum.css';
 
 export default function Forum() {
     let match = useRouteMatch();
@@ -73,14 +73,17 @@ export default function Forum() {
         }
     }
     function ThreadHandler() {
+        let { threadID, index } = useParams();
+        let history = useHistory();
         class Post extends React.Component {
             constructor(props) {
                 super(props);
                 this.state = {
                     postdata: this.props.data,
                     user: {
-                        name: this.props.name,
-                        URI: this.props.URI
+                        id: this.props.userID,
+                        name: this.props.username,
+                        URI: this.props.userURI
                     }
                 }
             }
@@ -88,7 +91,7 @@ export default function Forum() {
                 return (
                     <div className="forumPost">
                         <div className="forumPostInfo">
-                            <Link className="forumUserInfo" to="/users:0">
+                            <Link className="forumUserInfo" to={`/users:${this.state.user.id}`}>
                                 <img className="forumUserPic" src={this.state.user.URI} alt="Forum User Icon" />
                                 <span className="forumUsername">{this.state.user.name}</span>
                             </Link>
@@ -112,67 +115,50 @@ export default function Forum() {
                 super(props);
                 this.state = {
                     id: this.props.id,
-                    index: {
-                        max: 0,
-                        current: 0,
-                    },
+                    index: 0,
+                    indexMax: 1,
                     content: {
-                        user: {
-                            name: "sample 1",
-                            URI: "https://picsum.photos/200/300"
-                        },
-                        postdata: [
-                            {
-                                h1: "test",
-                                text: "Voluptate excepteur ipsum et qui ullamco commodo cillum officia excepteur sint aliquip aliquip. Qui mollit Lorem anim occaecat velit. Ut do deserunt pariatur cupidatat magna ut excepteur tempor nulla id laboris ad. Mollit deserunt ipsum elit non laboris id duis deserunt velit tempor minim sunt magna nisi. Ullamco qui voluptate et non."
-                            },
-                            {
-                                text: "multi paragraph test"
-                            }
-                        ]
+                        user: { name: "sample 1", URI: "https://picsum.photos/200/300" },
+                        postdata: [{ h1: "test", text: "Voluptate excepteur ipsum et qui ullamco commodo cillum officia excepteur sint aliquip aliquip. Qui mollit Lorem anim occaecat velit. Ut do deserunt pariatur cupidatat magna ut excepteur tempor nulla id laboris ad. Mollit deserunt ipsum elit non laboris id duis deserunt velit tempor minim sunt magna nisi. Ullamco qui voluptate et non." }, { text: "multi paragraph test" }]
                     },
-                    replies: [
-                        {
-                            user: {
-                                name: "sample 2",
-                                URI: "https://picsum.photos/500/300"
-                            },
-                            postdata: [
-                                {
-                                    text: "Ad ullamco deserunt id minim cupidatat amet sunt quis in do. Qui consectetur eiusmod mollit aliquip velit in dolore. Nostrud tempor deserunt laboris ipsum consectetur sit anim. Irure cillum ut aliquip aliqua esse consectetur dolor incididunt eiusmod adipisicing eu ipsum nisi elit."
-                                }
-                            ]
-                        }
+                    replies: [{
+                        user: { name: "sample 2", URI: "https://picsum.photos/500/300" }, postdata: [{ text: "Ad ullamco deserunt id minim cupidatat amet sunt quis in do. Qui consectetur eiusmod mollit aliquip velit in dolore. Nostrud tempor deserunt laboris ipsum consectetur sit anim. Irure cillum ut aliquip aliqua esse consectetur dolor incididunt eiusmod adipisicing eu ipsum nisi elit." }]
+                    }
                     ]
                 };
             }
             componentDidMount() {
-                this.setState({ index: { max: 3, current: parseInt(this.props.index) } });
+                this.setState({ index: parseInt(this.props.index) });
             }
             render() {
                 return (
                     <div id="threadContainer">
                         <Post
-                            name={this.state.content.user.name}
-                            URI={this.state.content.user.URI}
+                            username={this.state.content.user.name}
+                            userURI={this.state.content.user.URI}
+                            userID={0}
                             data={this.state.content.postdata}
                         />
                         <div id="forumThreadReplies">
                             {this.state.replies.map((data, index) => (
                                 <Post
                                     key={index}
-                                    name={data.user.name}
-                                    URI={data.user.URI}
+                                    username={data.user.name}
+                                    userURI={data.user.URI}
+                                    userID={0}
                                     data={data.postdata}
                                 />
                             ))}
                             <div id="replyIndex">
-                                <span>Page: {this.state.index.current}</span>
+                                <span>Page: {this.state.index}</span>
                                 <span>
                                     <button id="forumIndexPrev"
-                                        disabled={this.state.index.current - 1 < 0 ? true : false}
+                                        disabled={this.state.index - 1 < 0 ? true : false}
                                         onClick={() => {
-                                            this.setState({ index: this.state.index - 1 >= 0 ? this.state.index - 1 : this.state.index });
+                                            let currentIndex = this.state.index;
+                                            this.setState({ index: currentIndex - 1 });
+                                            history.push(`${match.path}/thread:${threadID}:${currentIndex}`); //TODO: fix this mess that kinda doesn't work 
+                                            //history.push(`${match.path}/thread:${threadID}:${1}`); //this works fine for some reason
                                         }}>
                                         <i className="fas fa-chevron-left" />
                                     </button>
@@ -180,9 +166,11 @@ export default function Forum() {
                                         <i className="icon-small fas fa-circle" />
                                     </span>
                                     <button id="forumIndexNext"
-                                        disabled={this.state.index.current + 1 > this.state.index.max ? true : false}
+                                        disabled={this.state.index + 1 > this.state.indexMax ? true : false}
                                         onClick={() => {
-                                            this.setState({ index: this.state.index + 1 });
+                                            let currentIndex = this.state.index;
+                                            this.setState({ index: currentIndex + 1 });
+                                            history.push(`${match.path}/thread:${threadID}:${currentIndex}`);                                   
                                         }}>
                                         <i className="fas fa-chevron-right" />
                                     </button>
@@ -193,14 +181,13 @@ export default function Forum() {
                 );
             }
         }
-        let { threadID, index } = useParams();
         return (
             <main id="forumThread">
-                <header>
+                {/* <header>
                     <button id="forumBack">
 
                     </button>
-                </header>
+                </header> */}
                 <Thread id={threadID} index={index} />
             </main>
         );
