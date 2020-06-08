@@ -26,6 +26,22 @@ a {
   text-decoration: none;
 }
 
+button {
+  background-color: unset;
+  border: none;
+  padding: 0.6em;
+  margin: 0 0.4em;
+  color: rgb(255, 255, 255);
+}
+
+button:disabled {
+  color: rgb(160, 160, 160);
+}
+
+header {
+    display: flex;
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -45,6 +61,15 @@ footer {
   padding: 1em;
   color: rgb(255, 255, 255);
   background-color: rgb(20, 20, 20);
+}
+
+.icon {
+  margin: 0.4em;
+}
+
+.icon-small {
+  font-size: 0.4em;
+  margin: 0.4em;
 }
 
 /*   GENERIC END  */

@@ -1,11 +1,13 @@
 #forumThreadContainer {
-    width: 100%;
+    width: 80%;
 }
+
 
 .threadPostsContainer {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    
 }
 
 .threadTitle {
@@ -30,4 +32,76 @@
 
 .forumThreadPreview>* {
     margin-bottom: 1em;
+}
+
+#threadContainer {
+    width: 80%;
+}
+
+.forumPost {
+    display: flex;
+    margin: 1em 0;
+    border: 1px solid rgb(50, 50, 50);
+    background-color: rgb(20, 20, 20);
+}
+
+.forumPost article {
+    padding: 0;
+}
+
+.forumPost>*{
+    padding: 1em;
+}
+
+.forumPost section {
+    margin: 1em 0;
+}
+
+.forumPostInfo {
+    display: flex;
+    flex-direction: column;
+    width: 5em;
+    border-right: 1px solid rgb(50, 50, 50);
+}
+
+.forumUserPic {
+    height: 5em;
+    width: 5em;
+    object-fit: cover;
+}
+
+.forumPostContent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#forumRepliesContainer {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgb(50, 50, 50);
+}
+
+#replyIndex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#replyIndex>span {
+    display: flex;
+}
+
+#replyIndex>span>span {
+    display: flex;
+    align-items: center;
+}
+
+@media screen and (max-width: 800px) {
+    #forumThreadContainer {
+        width: 100%;
+    }
+    #threadContainer {
+        width: 100%;
+    }    
 }

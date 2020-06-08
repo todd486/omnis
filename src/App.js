@@ -74,6 +74,9 @@ function Frontpage() {
 				</section>
 				<img src={Launcher} alt="Omnis World Launcher" id="frontpageLauncher" />
 			</section>
+			<section id="download">
+				Ullamco est ipsum velit adipisicing cillum sit consectetur magna laborum cillum. Aute voluptate pariatur consequat ullamco. Labore excepteur deserunt tempor sunt ut amet anim magna consequat et culpa laborum.
+			</section>
 			<section id="news">
 				<h2>Recent news</h2>
 				<div id="newsContainer">
