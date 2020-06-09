@@ -1,79 +1,61 @@
 import React from 'react';
-import { Switch, Route, Link, BrowserRouter, useParams, useRouteMatch } from 'react-router-dom';
+import { Switch, Route, Link, BrowserRouter, useParams, useRouteMatch, Redirect } from 'react-router-dom';
 import './css/App.css';
 
 import Forum from './components/Forum';
+import News from './components/News';
+import Dashboard from './components/Dashboard';
+import Nav from './components/Nav';
 
 import Banner from './img/omnis-wallpaper.png';
 import Launcher from './img/OmnisWorld-Launcher.png';
 
-class Nav extends React.Component {
+export default class App extends React.Component {
 	constructor(props) {
 		super(props);
+		this.logout = this.logout.bind(this);
 		this.state = {
-			loggedIn: true,
-			user: {
-				UUID: null,
-				name: "whii"
-			}
-		}
+			user: null,
+		};
 	}
-	componentWillMount() {
-		//load data 'n stuff
+	componentDidMount() {
+		//TODO: fancy sql stuff here
+		this.setState({
+			user: {
+				UUID: 	"0d497d95-8ab4-48b9-a26f-a75de72b6e0b",
+				name: 	"whii",
+				imgURI: "https://picsum.photos/500/300",
+			}
+		});
+	}
+	logout() {
+		this.setState({ user: null });
 	}
 	render() {
 		return (
-			<nav>
-				<div id="logoContainer">
-					<Link to="/"><img src="" alt="Omnis small logo" /></Link>
+			<BrowserRouter>
+				<div className="App">
+					<Nav
+						userdata={this.state.user !== null ? {
+							UUID: this.state.user.UUID,
+							name: this.state.user.name
+						} : null}
+						logout={this.logout}
+					/>
+					<Switch>
+						<Route exact path="/" component={Frontpage} />
+						<Route path="/forum" component={Forum} />
+						<Route path="/news" component={News} />
+						<Route path="/about" component={About} />
+						<Route path="/register" component={Register} />
+						<Route path="/login"><Login user={this.state.user} /></Route>
+						<Route path="/dashboard"><Dashboard user={this.state.user} /></Route>
+					</Switch>
+					<Footer />
 				</div>
-				<div id="linkContainer">
-					<Link to="/forum"	>Forums</Link>
-					<Link to="/news"	>News</Link>
-					<Link to="/about"	>About us</Link>
-					{this.state.loggedIn ?
-						<span>
-							<Link to="/dashboard">
-								<i className="icon fas fa-user" />
-								<span>Welcome <i>{`${this.state.user.name}`}</i>!</span>
-							</Link>
-							<Link to="/" id="logout" className="noselect" onClick={() => {
-								this.setState({ loggedIn: false });
-							}}>Log Out</Link>
-						</span> :
-						<span>
-							<i className="icon far fa-user" />
-							<Link to="/register">Register</Link>
-							<Link to="/login">Log In</Link>
-						</span>
-					}
-				</div>
-
-			</nav>
+			</BrowserRouter>
 		);
 	}
-}
-
-
-
-export default function App() {
-	return (
-		<BrowserRouter>
-			<div className="App">
-				<Nav />
-				<Switch>
-					<Route exact path="/" component={Frontpage} />
-					<Route path="/forum" component={Forum} />
-					<Route path="/news" component={News} />
-					<Route path="/about" component={About} />
-					<Route path="/register" component={Register} />
-					<Route path="/login" component={Login} />
-					<Route path="/dashboard" component={Dashboard} />
-				</Switch>
-				<Footer />
-			</div>
-		</BrowserRouter>
-	);
 }
 
 function Frontpage() {
@@ -120,19 +102,12 @@ function About() {
 	);
 }
 
-function News() {
-	return (
-		<main>
-			<h1>News</h1>
-		</main>
-	);
-}
-
-class Dashboard extends React.Component {
+class NotFound extends React.Component {
 	render() {
 		return (
 			<main>
-				<h1>Your Dashboard</h1>
+				<h1>404, that's an error.</h1>
+				<h2>We couldn't find the requested page.</h2>
 			</main>
 		);
 	}
@@ -166,8 +141,8 @@ class Register extends React.Component {
 					</div>
 
 					<button type="submit" onClick={() => {
-						
-					}}>Log In</button>
+
+					}}>Register</button>
 				</form>
 			</main>
 		);
@@ -185,23 +160,25 @@ class Login extends React.Component {
 
 	render() {
 		return (
-			<main>
-				<h1>Login</h1>
-				<form>
-					<div className="inputContainer">
-						<label>Email</label>
-						<input type="email" />
-					</div>
-					<div className="inputContainer">
-						<label>Password</label>
-						<input type="password" />
-					</div>
+			this.props.user === null ?
+				<main>
+					<h1>Login</h1>
+					<form>
+						<div className="inputContainer">
+							<label>Email</label>
+							<input type="email" />
+						</div>
+						<div className="inputContainer">
+							<label>Password</label>
+							<input type="password" />
+						</div>
 
-					<button type="submit" onClick={() => {
-						
-					}}>Log In</button>
-				</form>
-			</main>
+						<button type="submit" onClick={() => {
+
+						}}>Log In</button>
+					</form>
+				</main>
+				: <Redirect to="/dashboard" /> //if logged in already, just redirect to their dashboard
 		);
 	}
 }

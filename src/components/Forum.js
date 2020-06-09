@@ -157,7 +157,8 @@ export default function Forum() {
                                         onClick={() => {
                                             let currentIndex = this.state.index;
                                             this.setState({ index: currentIndex - 1 });
-                                            history.push(`${match.path}/thread:${threadID}:${currentIndex}`); //TODO: fix this mess that kinda doesn't work 
+                                            history.push(`${match.path}/thread:${threadID}:${currentIndex}`); 
+                                            //TODO: fix this mess that kinda doesn't work 
                                             //history.push(`${match.path}/thread:${threadID}:${1}`); //this works fine for some reason
                                         }}>
                                         <i className="fas fa-chevron-left" />

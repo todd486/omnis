@@ -1,0 +1,19 @@
+#dashboard {
+
+}
+
+#dashboardAtAGlance {
+    display: flex;
+}
+
+#dashboardUserInfo {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+}
+
+#dashboardProfilePic {
+    object-fit: cover;
+    width: 5em;
+    height: 5em;
+}
