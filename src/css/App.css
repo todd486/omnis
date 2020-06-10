@@ -76,8 +76,18 @@ footer {
   margin: 0 0.4em;
 }
 
+icon-large {
+  font-size: 1.4em;
+  margin: 0 0.4em;
+}
+
 .noselect {
   user-select: none;
+}
+
+textarea {
+  resize: none;
+  width: 100%;
 }
 
 /*   GENERIC END  */
@@ -116,35 +126,11 @@ form {
   font-family: 'Cabin', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
 }
 
-form>button{
+/* form>button{
   
-}
+} */
 
 /*   FORM END   */
-
-/*   FRONTPAGE BEGIN   */
-
-#frontpageBanner {
-  object-fit: contain;
-  max-height: 10em;
-  width: auto;
-}
-
-#frontpageLauncher {
-  max-width: 50%;
-}
-
-#frontpage>#blurb {
-  display: flex;
-  align-items: center;
-  max-width: 80%;
-  background-color: rgb(20, 20, 20);
-}
-#blurb>section>div {
-  margin: 1em;
-}
-
-/*   FRONTPAGE END   */
 
 /*   MOBILE BEGIN   */
 

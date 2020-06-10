@@ -65,16 +65,51 @@
 }
 
 .forumUserPic {
-    height: 5em;
-    width: 5em;
+    height: 8em;
+    width: 8em;
     object-fit: cover;
 }
 
 .forumPostContent {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     width: 100%;
 }
+
+.forumPostActions {
+    display: flex;
+    align-self: flex-end;
+    
+}
+
+#forumTextareaContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(50, 50, 50);
+    min-height: 20vh;
+    justify-content: flex-end;
+    margin-bottom: 1em;
+    padding: 1em;
+}
+
+#forumTextarea {
+    padding: 1em;
+    flex: 1 1;
+    background-color: rgb(20, 20, 20);
+    margin-bottom: 1em;
+}
+
+#forumTextareaSettings {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#forumTextareaSettings>button {
+    margin-left: 1em;
+}
+
+
 
 #forumRepliesContainer {
     display: flex;

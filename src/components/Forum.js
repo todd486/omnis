@@ -1,5 +1,8 @@
 import React from 'react';
 import { Switch, Route, Link, useParams, useRouteMatch, useHistory } from 'react-router-dom';
+
+import NotFound from '../components/NotFound';
+
 import '../css/Forum.css';
 
 export default function Forum() {
@@ -91,7 +94,7 @@ export default function Forum() {
                 return (
                     <div className="forumPost">
                         <div className="forumPostInfo">
-                            <Link className="forumUserInfo" to={`/users:${this.state.user.id}`}>
+                            <Link className="forumUserInfo" to={`/users:${this.state.user.id}`}> {/* redo this mess to fix css */}
                                 <img className="forumUserPic" src={this.state.user.URI} alt="Forum User Icon" />
                                 <span className="forumUsername">{this.state.user.name}</span>
                             </Link>
@@ -105,6 +108,23 @@ export default function Forum() {
                                     </section>
                                 ))}
                             </article>
+                            <div className="forumPostActions">
+                                <button title="Mention this user?" onClick={() => {
+
+                                }}>
+                                    <i className="icon-large fas fa-at" />
+                                </button>
+                                <button title="Quote this post?" onClick={() => {
+
+                                }}>
+                                    <i className="icon-large fas fa-quote-right" />
+                                </button>
+                                <button title="Flag this post?" onClick={() => {
+
+                                }}>
+                                    <i className="icon-large fas fa-flag" />
+                                </button>
+                            </div>
                         </div>
                     </div>
                 );
@@ -118,13 +138,12 @@ export default function Forum() {
                     index: 0,
                     indexMax: 1,
                     content: {
-                        user: { name: "sample 1", URI: "https://picsum.photos/200/300" },
+                        user: { name: "sample user 1", URI: "https://picsum.photos/200/300" },
                         postdata: [{ h1: "test", text: "Voluptate excepteur ipsum et qui ullamco commodo cillum officia excepteur sint aliquip aliquip. Qui mollit Lorem anim occaecat velit. Ut do deserunt pariatur cupidatat magna ut excepteur tempor nulla id laboris ad. Mollit deserunt ipsum elit non laboris id duis deserunt velit tempor minim sunt magna nisi. Ullamco qui voluptate et non." }, { text: "multi paragraph test" }]
                     },
                     replies: [{
-                        user: { name: "sample 2", URI: "https://picsum.photos/500/300" }, postdata: [{ text: "Ad ullamco deserunt id minim cupidatat amet sunt quis in do. Qui consectetur eiusmod mollit aliquip velit in dolore. Nostrud tempor deserunt laboris ipsum consectetur sit anim. Irure cillum ut aliquip aliqua esse consectetur dolor incididunt eiusmod adipisicing eu ipsum nisi elit." }]
-                    }
-                    ]
+                        user: { name: "sample user 2", URI: "https://picsum.photos/500/300" }, postdata: [{ text: "Ad ullamco deserunt id minim cupidatat amet sunt quis in do. Qui consectetur eiusmod mollit aliquip velit in dolore. Nostrud tempor deserunt laboris ipsum consectetur sit anim. Irure cillum ut aliquip aliqua esse consectetur dolor incididunt eiusmod adipisicing eu ipsum nisi elit." }]
+                    }]
                 };
             }
             componentDidMount() {
@@ -133,10 +152,11 @@ export default function Forum() {
             render() {
                 return (
                     <div id="threadContainer">
+                        <h1>thread title</h1>
                         <Post
                             username={this.state.content.user.name}
                             userURI={this.state.content.user.URI}
-                            userID={0}
+                            userID={"5210d125-29f4-4d0b-b21b-d9e0b1a5a20c"} //temp uuid
                             data={this.state.content.postdata}
                         />
                         <div id="forumThreadReplies">
@@ -145,10 +165,11 @@ export default function Forum() {
                                     key={index}
                                     username={data.user.name}
                                     userURI={data.user.URI}
-                                    userID={0}
+                                    userID={"d29a3f1b-e70a-4fc4-8c82-fdd50165dbf5"} //temp uuid
                                     data={data.postdata}
                                 />
                             ))}
+                            <ForumTextarea />
                             <div id="replyIndex">
                                 <span>Page: {this.state.index}</span>
                                 <span>
@@ -157,7 +178,7 @@ export default function Forum() {
                                         onClick={() => {
                                             let currentIndex = this.state.index;
                                             this.setState({ index: currentIndex - 1 });
-                                            history.push(`${match.path}/thread:${threadID}:${currentIndex}`); 
+                                            history.push(`${match.path}/thread:${threadID}:${currentIndex}`);
                                             //TODO: fix this mess that kinda doesn't work 
                                             //history.push(`${match.path}/thread:${threadID}:${1}`); //this works fine for some reason
                                         }}>
@@ -171,7 +192,7 @@ export default function Forum() {
                                         onClick={() => {
                                             let currentIndex = this.state.index;
                                             this.setState({ index: currentIndex + 1 });
-                                            history.push(`${match.path}/thread:${threadID}:${currentIndex}`);                                   
+                                            history.push(`${match.path}/thread:${threadID}:${currentIndex}`);
                                         }}>
                                         <i className="fas fa-chevron-right" />
                                     </button>
@@ -197,6 +218,61 @@ export default function Forum() {
         <Switch>
             <Route exact path={`${match.path}/`} component={Frontpage} />
             <Route path={`${match.path}/thread::threadID::index`} component={ThreadHandler} />
+            {/*For some reason using a single ':' makes the useParams() hook return `:${threadID}` instead of `${threadID}`. Why using "::" fixes this; I have no idea.*/}
+            <Route component={NotFound} />
         </Switch>
     );
+}
+
+class ForumTextarea extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+    render() {
+        return (
+            <div id="forumCreatePost">
+                <div id="forumTextareaContainer">
+                    <div id="forumTextarea">
+                        <span>Raw</span>
+                        <div id="forumTextareaRaw">
+                            <textarea />
+                        </div>
+                        <span>Preview</span>
+                        <div id="forumTextareaFormatted">
+                            <i>todo: display formatted post here</i>
+                        </div>
+                        {/*                        
+                                        postdata: { //an article
+                                            {
+                                                // a section
+                                                ?quotePost: [{postIDs}],
+                                                ?h1: string,
+                                                ?h2: string,
+                                                text: {
+                                                    ?mention: [{userIDs}],
+                                                    raw: string //regex to find @username, and lookup ids
+                                                }
+                                            }
+                                        }
+                                        */}
+                    </div>
+                    <div id="forumTextareaSettings">
+                        <button title="Bold">
+                            <i className="icon-large fas fa-bold" /></button>
+                        <button title="Italics">
+                            <i className="icon-large fas fa-italic" /></button>
+                        <button title="Insert link">
+                            <i className="icon-large fas fa-link" /></button>
+                        <button title="Mention someone">
+                            <i className="icon-large fas fa-at" /></button>
+                        <button title="Quote someone">
+                            <i className="icon-large fas fa-quote-right" /></button>
+                        <button id="forumSubmit">Sumbit</button>
+                    </div>
+
+                </div>
+            </div>
+        );
+    }
 }
