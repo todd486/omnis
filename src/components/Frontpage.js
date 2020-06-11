@@ -3,8 +3,6 @@ import React from 'react';
 import Banner from '../img/omnis-wallpaper.png';
 import Launcher from '../img/OmnisWorld-Launcher.png';
 
-import '../css/Frontpage.css';
-
 export default function Frontpage() {
     return (
         <main id="frontpage">

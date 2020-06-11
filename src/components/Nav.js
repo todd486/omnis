@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import '../css/Nav.css';
-
 export default class Nav extends React.Component {
 	componentDidMount() {
 		//load data 'n stuff

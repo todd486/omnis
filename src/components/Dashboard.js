@@ -1,8 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-import '../css/Dashboard.css';
-
 export default class Dashboard extends React.Component {
     render() {
         return (

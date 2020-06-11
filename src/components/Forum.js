@@ -3,8 +3,6 @@ import { Switch, Route, Link, useParams, useRouteMatch, useHistory } from 'react
 
 import NotFound from '../components/NotFound';
 
-import '../css/Forum.css';
-
 export default function Forum() {
     let match = useRouteMatch();
     class Frontpage extends React.Component {
@@ -86,29 +84,41 @@ export default function Forum() {
                     user: {
                         id: this.props.userID,
                         name: this.props.username,
-                        URI: this.props.userURI
+                        URI: this.props.userURI,
+                        moderator: this.props.moderator,
                     }
                 }
             }
             render() {
                 return (
                     <div className="forumPost">
-                        <div className="forumPostInfo">
-                            <Link className="forumUserInfo" to={`/users:${this.state.user.id}`}> {/* redo this mess to fix css */}
-                                <img className="forumUserPic" src={this.state.user.URI} alt="Forum User Icon" />
-                                <span className="forumUsername">{this.state.user.name}</span>
-                            </Link>
-                        </div>
+                        <Link className="forumUserInfo" to={`/users:${this.state.user.id}`}>
+                            <img className="forumUserPic" src={this.state.user.URI} alt="Forum User Icon" />
+                            <div className="forumUsername">
+                                {this.state.user.name}{this.state.user.moderator ? 
+                                <i className="icon-left forumModIcon fas fa-shield-alt" title="This user is a moderator." /> : false}
+                            </div>
+                            <i>User Title</i>
+                            <div className="forumUserExtraInfo">
+                                <div>Joined: 2/3/2020</div>
+                                <div>Posts: 20</div>
+                            </div>
+                        </Link>
                         <div className="forumPostContent">
                             <article>
                                 {this.state.postdata.map((data, index) => (
                                     <section key={index}>
-                                        {data.h1 !== null ? <h1>{data.h1}</h1> : null}
+                                        {data.h1 !== undefined ? <h1>{data.h1}</h1> : null}
                                         {data.text}
                                     </section>
                                 ))}
                             </article>
                             <div className="forumPostActions">
+                                <div className="forumPostInfo">
+                                    <i className="icon far fa-clock" />
+                                    <span>1/1/2020 12:30UTC</span>
+                                </div>
+                                
                                 <button title="Mention this user?" onClick={() => {
 
                                 }}>
@@ -143,7 +153,12 @@ export default function Forum() {
                     },
                     replies: [{
                         user: { name: "sample user 2", URI: "https://picsum.photos/500/300" }, postdata: [{ text: "Ad ullamco deserunt id minim cupidatat amet sunt quis in do. Qui consectetur eiusmod mollit aliquip velit in dolore. Nostrud tempor deserunt laboris ipsum consectetur sit anim. Irure cillum ut aliquip aliqua esse consectetur dolor incididunt eiusmod adipisicing eu ipsum nisi elit." }]
-                    }]
+
+                    },
+                    {
+                        user: { name: "sample user 3", URI: "https://picsum.photos/800/700" }, postdata: [{ h1: "really long post", text: "In et eiusmod velit exercitation cillum sit ipsum in ut quis ut. Id veniam eiusmod reprehenderit dolore velit. Commodo culpa aute tempor consequat. Amet veniam irure eiusmod velit esse ea ex. Ut eu mollit sit in nostrud ullamco ipsum duis." }, { h1: "like a stupidly long post", text: "Qui aute veniam culpa cillum non ipsum fugiat commodo do nulla nostrud. Est eiusmod aliqua Lorem reprehenderit duis sint. Occaecat excepteur enim voluptate velit aute aute officia veniam. Est velit voluptate adipisicing proident qui. Nostrud consequat duis id in aute id amet magna ut." }, { text: "Ad ex id excepteur ad esse dolor elit quis ullamco irure aute. Veniam incididunt cillum eu velit enim minim in cupidatat enim esse esse ipsum id. Sint consectetur nostrud et non. Aliquip elit fugiat mollit velit et qui." }]
+                    }
+                    ]
                 };
             }
             componentDidMount() {
@@ -158,6 +173,7 @@ export default function Forum() {
                             userURI={this.state.content.user.URI}
                             userID={"5210d125-29f4-4d0b-b21b-d9e0b1a5a20c"} //temp uuid
                             data={this.state.content.postdata}
+                            moderator={true}
                         />
                         <div id="forumThreadReplies">
                             {this.state.replies.map((data, index) => (
@@ -167,9 +183,9 @@ export default function Forum() {
                                     userURI={data.user.URI}
                                     userID={"d29a3f1b-e70a-4fc4-8c82-fdd50165dbf5"} //temp uuid
                                     data={data.postdata}
+                                    moderator={false}
                                 />
                             ))}
-                            <ForumTextarea />
                             <div id="replyIndex">
                                 <span>Page: {this.state.index}</span>
                                 <span>
@@ -198,6 +214,8 @@ export default function Forum() {
                                     </button>
                                 </span>
                             </div>
+                            <h3>Post something!</h3>
+                            <ForumTextarea />
                         </div>
                     </div>
                 );
@@ -231,18 +249,17 @@ class ForumTextarea extends React.Component {
     }
     render() {
         return (
-            <div id="forumCreatePost">
-                <div id="forumTextareaContainer">
-                    <div id="forumTextarea">
-                        <span>Raw</span>
-                        <div id="forumTextareaRaw">
-                            <textarea />
-                        </div>
-                        <span>Preview</span>
-                        <div id="forumTextareaFormatted">
-                            <i>todo: display formatted post here</i>
-                        </div>
-                        {/*                        
+            <div id="forumTextareaContainer">
+                <div id="forumTextarea">
+                    <span>Raw</span>
+                    <div id="forumTextareaRaw">
+                        <textarea placeholder="TODO: make this shit work"/>
+                    </div>
+                    <span>Preview</span>
+                    <div id="forumTextareaFormatted">
+                        <i>TODO: display formatted post here</i>
+                    </div>
+                    {/*                        
                                         postdata: { //an article
                                             {
                                                 // a section
@@ -251,27 +268,26 @@ class ForumTextarea extends React.Component {
                                                 ?h2: string,
                                                 text: {
                                                     ?mention: [{userIDs}],
-                                                    raw: string //regex to find @username, and lookup ids
+                                                    raw: string //regex to find @username, and lookup ids /@+(.*)/g
                                                 }
                                             }
-                                        }
+                                        } 
                                         */}
-                    </div>
-                    <div id="forumTextareaSettings">
-                        <button title="Bold">
-                            <i className="icon-large fas fa-bold" /></button>
-                        <button title="Italics">
-                            <i className="icon-large fas fa-italic" /></button>
-                        <button title="Insert link">
-                            <i className="icon-large fas fa-link" /></button>
-                        <button title="Mention someone">
-                            <i className="icon-large fas fa-at" /></button>
-                        <button title="Quote someone">
-                            <i className="icon-large fas fa-quote-right" /></button>
-                        <button id="forumSubmit">Sumbit</button>
-                    </div>
-
                 </div>
+                <div id="forumTextareaSettings">
+                    <button title="Bold">
+                        <i className="icon-large fas fa-bold" /></button>
+                    <button title="Italics">
+                        <i className="icon-large fas fa-italic" /></button>
+                    <button title="Insert link">
+                        <i className="icon-large fas fa-link" /></button>
+                    <button title="Mention someone">
+                        <i className="icon-large fas fa-at" /></button>
+                    <button title="Quote someone">
+                        <i className="icon-large fas fa-quote-right" /></button>
+                    <button id="forumSubmit">Sumbit</button>
+                </div>
+
             </div>
         );
     }

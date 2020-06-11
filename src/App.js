@@ -8,6 +8,7 @@ import News from './components/News';
 import Dashboard from './components/Dashboard';
 import Nav from './components/Nav';
 import NotFound from './components/NotFound';
+import { Login, Register } from './components/Userdata';
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -15,6 +16,7 @@ export default class App extends React.Component {
 		this.logout = this.logout.bind(this);
 		this.state = {
 			user: null,
+			theme: "darkMode",
 		};
 	}
 	componentDidMount() {
@@ -33,7 +35,12 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<BrowserRouter>
-				<div className="App">
+				<div className={`App ${this.state.theme}`}>
+					<button onClick={() => {
+						this.setState({ theme: this.state.theme !== "darkMode" ? "darkMode" : "lightMode" });
+					}}>
+						<i className="fas fa-adjust" />
+					</button>
 					<Nav
 						userdata={this.state.user !== null ? {
 							UUID: this.state.user.UUID,
@@ -49,6 +56,7 @@ export default class App extends React.Component {
 						<Route path="/register" component={Register} />
 						<Route path="/login"><Login user={this.state.user} /></Route>
 						<Route path="/dashboard"><Dashboard user={this.state.user} /></Route>
+						{/* TODO: handle /users:userID */}
 						<Route component={NotFound} />
 					</Switch>
 					<Footer />
@@ -62,78 +70,10 @@ function About() {
 	return (
 		<main>
 			<h1>About</h1>
+			<span>Quis irure irure et nisi ut exercitation cupidatat id velit fugiat elit. Est et commodo eiusmod dolore sunt sunt officia mollit reprehenderit aute magna mollit. Ad Lorem labore duis officia dolor proident sit cillum ut labore anim. Anim eiusmod laboris dolor proident dolore duis deserunt excepteur pariatur aute. Velit commodo eiusmod ex proident nulla cupidatat adipisicing eu aute laboris consectetur exercitation. Ea minim duis ipsum ea sint. Deserunt duis cillum Lorem aliquip.</span>
+			<span>Deserunt aliqua Lorem sint do in ad aliqua ex in qui consequat. Dolor eiusmod deserunt occaecat esse officia aute sint ut et. Officia tempor incididunt commodo proident irure id aliqua ullamco duis do nulla occaecat qui. Cillum deserunt tempor quis duis ad dolore dolor occaecat veniam. Laboris nostrud laborum et anim pariatur laborum ex. Nostrud sunt duis labore ea culpa dolore irure et culpa cillum consectetur. Do veniam laborum velit laboris eu sunt.</span>
 		</main>
 	);
-}
-
-class Register extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			email: "",
-			password: "",
-			passwordRepeat: "",
-		};
-	}
-	render() {
-		return (
-			<main>
-				<h1>Register</h1>
-				<form>
-					<div className="inputContainer">
-						<label>Email</label>
-						<input type="email" />
-					</div>
-					<div className="inputContainer">
-						<label>Password</label>
-						<input type="password" />
-					</div>
-					<div className="inputContainer">
-						<label>Repeat Password</label>
-						<input type="password" />
-					</div>
-
-					<button type="submit" onClick={() => {
-
-					}}>Register</button>
-				</form>
-			</main>
-		);
-	}
-}
-
-class Login extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			email: "",
-			password: "",
-		};
-	}
-
-	render() {
-		return (
-			this.props.user === null ?
-				<main>
-					<h1>Login</h1>
-					<form>
-						<div className="inputContainer">
-							<label>Email</label>
-							<input type="email" />
-						</div>
-						<div className="inputContainer">
-							<label>Password</label>
-							<input type="password" />
-						</div>
-
-						<button type="submit" onClick={() => {
-
-						}}>Log In</button>
-					</form>
-				</main>
-				: <Redirect to="/dashboard" /> //if logged in already, just redirect to their dashboard
-		);
-	}
 }
 
 class Footer extends React.Component {

@@ -1,4 +1,21 @@
-/*   GENERIC BEGIN   */
+:root .darkMode {
+  --main-bg: rgb(32, 32, 32);
+  --main-alt: rgb(20, 20, 20);
+  --main-alt-2: rgb(50, 50, 50);
+  --text: rgb(255, 255, 255);
+  --img-bg: rgb(20, 20, 20);
+}
+
+:root .lightMode {
+  --main-bg: rgb(255, 255, 255);
+  /* TODO: Replace these with something prettier later */
+  --main-alt: rgb(200, 200, 200);
+  --main-alt-2: rgb(180, 180, 180);
+  --text: rgb(0, 0, 0);
+  --img-bg: rgb(210, 210, 210);
+}
+
+/*#region Generic*/
 
 html {
   padding: 0;
@@ -10,16 +27,23 @@ html {
 .App {
   display: flex;
   flex-direction: column;
-  
-  background-color: rgb(32, 32, 32);
+  background-color: var(--main-bg);
   color: rgb(255, 255, 255);
-  font-family: 'Cabin', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+  font-family: 'Cabin', 'Lucida Sans', Verdana, sans-serif;
+}
+
+* {
+  color: var(--text);
+}
+
+h1 {
+  font-family: 'Jost', 'Lucida Sans', Verdana, sans-serif;
 }
 
 img {
   max-width: 100%;
   width: auto;
-  background-color: rgb(20, 20, 20);
+  background-color: var(--img-bg);
 }
 
 a {
@@ -32,7 +56,6 @@ button {
   border: none;
   padding: 0.6em;
   margin: 0 0.4em;
-  color: rgb(255, 255, 255);
   font-family: 'Cabin', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
 }
 
@@ -41,7 +64,7 @@ button:disabled {
 }
 
 header {
-    display: flex;
+  display: flex;
 }
 
 main {
@@ -49,7 +72,6 @@ main {
   flex-direction: column;
   align-items: center;
   padding: 2em 3em;
-
   min-height: 100vh;
 }
 
@@ -63,8 +85,11 @@ section {
 
 footer {
   padding: 1em;
-  color: rgb(255, 255, 255);
   background-color: rgb(20, 20, 20);
+}
+
+.icon-left {
+  margin-left: 0.4em;
 }
 
 .icon {
@@ -90,9 +115,265 @@ textarea {
   width: 100%;
 }
 
-/*   GENERIC END  */
+/*#endregion Generic*/
 
-/*   FORM BEGIN   */
+/*#region Nav*/
+
+nav {
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--main-alt);
+}
+
+#linkContainer {
+  display: flex;
+}
+
+#linkContainer>* {
+  padding: 0.6em;
+}
+
+#linkContainer>span>a {
+  margin-right: 0.5em;
+}
+
+#logout {
+  cursor: pointer;
+}
+
+/*#endregion Nav*/
+
+/*#region Frontpage*/
+
+#frontpageBanner {
+  object-fit: contain;
+  max-height: 10em;
+  width: auto;
+}
+
+#frontpageLauncher {
+  max-width: 50%;
+}
+
+#frontpage>#blurb {
+  display: flex;
+  align-items: center;
+  max-width: 80%;
+  background-color: var(--main-alt);
+}
+
+#blurb>section>div {
+  margin: 1em;
+}
+
+/*#endregion Frontpage*/
+
+/*#region Dashboard*/
+
+/* #dashboard {
+
+} */
+
+#dashboardAtAGlance {
+  display: flex;
+}
+
+#dashboardUserInfo {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  background-color: var(--main-alt-2);
+}
+
+#dashboardProfilePic {
+  object-fit: cover;
+  width: 8em;
+  height: 8em;
+}
+
+/*#endregion Dashboard*/
+
+/*#region Forum*/
+
+/*#region Threads*/
+#forumThreadContainer {
+  width: 100%;
+}
+
+#forumThreadReplies {
+  border-top: 1px solid var(--main-alt-2);
+}
+
+.forumModIcon {
+  color: rgb(10, 200, 120);
+}
+
+.threadPostsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.threadTitle {
+  display: flex;
+}
+
+.threadTitle>* {
+  margin: unset;
+  margin-right: 1em;
+}
+
+.threadPostsContainer>a {
+  width: 100%;
+}
+
+.forumThreadPreview {
+  background-color: var(--main-alt);
+  padding: 1em;
+  border: 1px solid var(--main-alt-2);
+  border-radius: 0.5em;
+  margin: 0.6em 0;
+}
+
+.forumThreadPreview>* {
+  margin-bottom: 1em;
+}
+
+#threadContainer {
+  width: 100%;
+}
+
+/*#endregion Threads*/
+
+/*#region Post*/
+.forumPost {
+  display: flex;
+  margin: 1em 0;
+  border: 1px solid var(--main-alt-2);
+  background-color: var(--main-alt);
+  border-radius: 0.5em;
+}
+
+.forumPost article {
+  padding: 0;
+}
+
+.forumPost>* {
+  padding: 1em;
+}
+
+.forumPost section {
+  margin: 1em 0;
+}
+
+.forumUserInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid var(--main-alt-2);
+}
+
+.forumUserPic {
+  height: 12vh;
+  width: 12vh;
+  object-fit: cover;
+  margin-bottom: 1em;
+  clip-path: circle();
+}
+
+.forumUserExtraInfo {
+  border-top: 1px solid var(--main-alt-2);
+  margin-top: 1em;
+  padding: 1em;
+}
+
+.forumPostContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1 0;
+}
+
+.forumPostActions {
+  display: flex;
+  align-self: flex-end;
+  border-top: 1px solid var(--main-alt-2);
+  padding-top: 0.5em;
+}
+
+.forumPostActions>* {
+  display: flex;
+  align-items: center;
+}
+
+.forumPostInfo {
+  padding-right: 0.8em;
+  border-right: 1px solid var(--main-alt-2);
+}
+/*#endregion Post*/
+
+#forumRepliesContainer {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--main-alt-2);
+}
+
+#replyIndex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 1em;
+  border-bottom: 1px solid var(--main-alt-2);
+}
+
+#replyIndex>span {
+  display: flex;
+}
+
+#replyIndex>span>span { /*redo this :vomit:*/
+  display: flex;
+  align-items: center;
+}
+
+/*#region ForumTextarea*/
+
+#forumTextareaContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--main-alt-2);
+  min-height: 20vh;
+  justify-content: flex-end;
+  margin-top: 1em;
+  padding: 1em;
+}
+
+#forumTextarea {
+  padding: 1em;
+  flex: 1 1;
+  background-color: var(--main-alt);
+  margin-bottom: 1em;
+}
+
+#forumTextareaSettings {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#forumTextareaSettings>button {
+  margin-left: 1em;
+}
+
+#forumTextareaFormatted {
+  padding: 1em;
+  background-color: var(--main-alt-2);
+}
+
+/*#endregion ForumTextarea*/
+
+/*#endregion Forum*/
+
+/*#region Form*/
 
 form {
   display: flex;
@@ -108,7 +389,7 @@ form {
   justify-content: space-between;
   margin: 0.5em 0;
   padding: 0 0 0 0.5em;
-  border: 1px solid rgb(50, 50, 50)
+  border: 1px solid var(--main-alt-2);
 }
 
 .inputContainer>label {
@@ -117,11 +398,11 @@ form {
 }
 
 .inputContainer>input {
-  background-color: rgb(50, 50, 50);
+  background-color: var(--main-alt-2);
   border: unset;
   font-size: 1.2em;
   padding: 0.5em;
-  color: white;
+  color: var(--text);
   width: calc(50% - 1em);
   font-family: 'Cabin', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
 }
@@ -130,16 +411,15 @@ form {
   
 } */
 
-/*   FORM END   */
+/*#endregion Form*/
 
-/*   MOBILE BEGIN   */
+/*#region Mobile*/
 
 @media screen and (max-width: 800px) {
   main {
-    
     padding: 2em;
   }
-  
+  /*#region FrontpageMobile*/
   #frontpage>#blurb {
     flex-direction: column;
     max-width: 100%;
@@ -151,6 +431,21 @@ form {
   #frontpageLauncher {
     max-width: 100%;
   }
+  /*#endregion FrontpageMobile*/
+  /*#region ForumMobile*/
+  .forumPost {
+    flex-direction: column;
+  }
+  .forumUserInfo {
+    flex-direction: row;
+    border: unset;
+    border-bottom: 1px solid var(--main-alt-2);
+  }
+  .forumUserPic {
+    height: 10vh;
+    width: 10vh;
+  }
+  /*#endregion ForumMobile*/
 }
 
-/*   MOBILE END   */
+/*#endregion Mobile*/
