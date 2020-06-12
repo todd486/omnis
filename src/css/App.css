@@ -1,3 +1,5 @@
+/*#region Themes*/
+
 :root .darkMode {
   --main-bg: rgb(32, 32, 32);
   --main-alt: rgb(20, 20, 20);
@@ -14,6 +16,8 @@
   --text: rgb(0, 0, 0);
   --img-bg: rgb(210, 210, 210);
 }
+
+/*#endregion Themes*/
 
 /*#region Generic*/
 
@@ -38,6 +42,11 @@ html {
 
 h1 {
   font-family: 'Jost', 'Lucida Sans', Verdana, sans-serif;
+}
+
+h3 {
+  margin: 0;
+  margin-bottom: 1em;
 }
 
 img {
@@ -98,6 +107,11 @@ footer {
 
 .icon-small {
   font-size: 0.4em;
+  margin: 0 0.4em;
+}
+
+.icon-medium {
+  font-size: 0.8em;
   margin: 0 0.4em;
 }
 
@@ -171,25 +185,41 @@ nav {
 
 /*#region Dashboard*/
 
-/* #dashboard {
-
-} */
+#dashboard>div {
+  border-bottom: 1px solid var(--main-alt-2);
+  width: 100%;
+} 
 
 #dashboardAtAGlance {
   display: flex;
 }
 
-#dashboardUserInfo {
-  display: flex;
-  flex-direction: column;
+#dashboardAtAGlance>* {
   padding: 1em;
-  background-color: var(--main-alt-2);
+  align-items: center;
+  flex: 1;
+}
+
+#dashboardUser {
+  display: flex;
+  
+  border-right: 1px solid var(--main-alt-2);
 }
 
 #dashboardProfilePic {
   object-fit: cover;
+  clip-path: circle();
   width: 8em;
   height: 8em;
+}
+
+#dashboardUserInfo {
+  padding: 1em;
+}
+
+.dashboardRecentPreview {
+  padding: 1em;
+  background-color: var(--main-alt);
 }
 
 /*#endregion Dashboard*/

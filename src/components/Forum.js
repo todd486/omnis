@@ -54,7 +54,7 @@ export default function Forum() {
                                 <h2>{data.title}</h2>
                                 <div className="threadPostsContainer">
                                     {data.threads.map((subdata, subindex) => (
-                                        <Link to={`/forum/thread:${subdata.id}:0`} key={subindex} >
+                                        <Link to={`/forum/thread:${subdata.id}&index:0`} key={subindex} >
                                             <div className="forumThreadPreview">
                                                 <span className="threadTitle">
                                                     <img className="threadIcon" src="" alt=" " />
@@ -76,6 +76,7 @@ export default function Forum() {
     function ThreadHandler() {
         let { threadID, index } = useParams();
         let history = useHistory();
+
         class Post extends React.Component {
             constructor(props) {
                 super(props);
@@ -91,12 +92,12 @@ export default function Forum() {
             }
             render() {
                 return (
-                    <div className="forumPost">
+                    <div className="forumPost" id={`post${this.props.id}`}>
                         <Link className="forumUserInfo" to={`/users:${this.state.user.id}`}>
                             <img className="forumUserPic" src={this.state.user.URI} alt="Forum User Icon" />
                             <div className="forumUsername">
-                                {this.state.user.name}{this.state.user.moderator ? 
-                                <i className="icon-left forumModIcon fas fa-shield-alt" title="This user is a moderator." /> : false}
+                                {this.state.user.name}{this.state.user.moderator ?
+                                    <i className="icon-left forumModIcon fas fa-shield-alt" title="This user is a moderator." /> : false}
                             </div>
                             <i>User Title</i>
                             <div className="forumUserExtraInfo">
@@ -118,7 +119,11 @@ export default function Forum() {
                                     <i className="icon far fa-clock" />
                                     <span>1/1/2020 12:30UTC</span>
                                 </div>
-                                
+                                <button title="Copy link?" onClick={() => {
+                                    navigator.clipboard.writeText(`https://domain.tld/${match.path}/thread:${threadID}&index:${index}#post${this.props.id}`);
+                                }}>
+                                    <i className="icon-large fas fa-share-alt" />
+                                </button>
                                 <button title="Mention this user?" onClick={() => {
 
                                 }}>
@@ -140,6 +145,7 @@ export default function Forum() {
                 );
             }
         }
+
         class Thread extends React.Component {
             constructor(props) {
                 super(props);
@@ -169,6 +175,7 @@ export default function Forum() {
                     <div id="threadContainer">
                         <h1>thread title</h1>
                         <Post
+                            id={0}
                             username={this.state.content.user.name}
                             userURI={this.state.content.user.URI}
                             userID={"5210d125-29f4-4d0b-b21b-d9e0b1a5a20c"} //temp uuid
@@ -179,6 +186,7 @@ export default function Forum() {
                             {this.state.replies.map((data, index) => (
                                 <Post
                                     key={index}
+                                    id={index + 1}
                                     username={data.user.name}
                                     userURI={data.user.URI}
                                     userID={"d29a3f1b-e70a-4fc4-8c82-fdd50165dbf5"} //temp uuid
@@ -235,7 +243,7 @@ export default function Forum() {
     return (
         <Switch>
             <Route exact path={`${match.path}/`} component={Frontpage} />
-            <Route path={`${match.path}/thread::threadID::index`} component={ThreadHandler} />
+            <Route path={`${match.path}/thread::threadID&index::index`} component={ThreadHandler} />
             {/*For some reason using a single ':' makes the useParams() hook return `:${threadID}` instead of `${threadID}`. Why using "::" fixes this; I have no idea.*/}
             <Route component={NotFound} />
         </Switch>
@@ -253,7 +261,10 @@ class ForumTextarea extends React.Component {
                 <div id="forumTextarea">
                     <span>Raw</span>
                     <div id="forumTextareaRaw">
-                        <textarea placeholder="TODO: make this shit work"/>
+                        <textarea
+                            ref={(textarea) => this.textArea = textarea}
+                            placeholder="TODO: implement post creation"
+                        />
                     </div>
                     <span>Preview</span>
                     <div id="forumTextareaFormatted">
