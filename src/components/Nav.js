@@ -2,9 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default class Nav extends React.Component {
-	componentDidMount() {
-		//load data 'n stuff
-	}
 	render() {
 		return (
 			<nav>
@@ -21,9 +18,8 @@ export default class Nav extends React.Component {
 								<i className="icon fas fa-user" />
 								<span>Welcome <i>{`${this.props.userdata.name}`}</i>!</span>
 							</Link>
-							<Link to="/" id="logout" className="noselect" onClick={() => {
-								this.props.logout();
-							}}>Log Out</Link>
+							<Link to="/" id="logout" className="noselect"
+								onClick={() => { this.props.logout(); }}>Log Out</Link>
 						</span> :
 						<span>
 							<i className="icon far fa-user" />
@@ -31,6 +27,9 @@ export default class Nav extends React.Component {
 							<Link to="/login">Log In</Link>
 						</span>
 					}
+					<button onClick={() => { this.props.changeTheme(); }}>
+						<i className="fas fa-adjust" />
+					</button>
 				</div>
 			</nav>
 		);

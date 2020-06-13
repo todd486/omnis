@@ -120,12 +120,12 @@ export default function Forum() {
                                     <span>1/1/2020 12:30UTC</span>
                                 </div>
                                 <button title="Copy link?" onClick={() => {
-                                    navigator.clipboard.writeText(`https://domain.tld/${match.path}/thread:${threadID}&index:${index}#post${this.props.id}`);
+                                    navigator.clipboard.writeText(`localhost:3000${match.path}/thread:${threadID}&index:${index}#post${this.props.id}`);
                                 }}>
                                     <i className="icon-large fas fa-share-alt" />
                                 </button>
                                 <button title="Mention this user?" onClick={() => {
-
+                                    
                                 }}>
                                     <i className="icon-large fas fa-at" />
                                 </button>
@@ -203,7 +203,7 @@ export default function Forum() {
                                             let currentIndex = this.state.index;
                                             this.setState({ index: currentIndex - 1 });
                                             history.push(`${match.path}/thread:${threadID}:${currentIndex}`);
-                                            //TODO: fix this mess that kinda doesn't work 
+                                            //TODO: fix this mess that REALLY doesn't work 
                                             //history.push(`${match.path}/thread:${threadID}:${1}`); //this works fine for some reason
                                         }}>
                                         <i className="fas fa-chevron-left" />
